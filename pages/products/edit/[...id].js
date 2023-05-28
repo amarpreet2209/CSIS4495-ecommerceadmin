@@ -1,10 +1,11 @@
 import Layout from "@/components/Layout";
 import {useRouter} from "next/router";
-import {useEffect} from "react";
-import products from "@/pages/products";
+import {useEffect, useState} from "react";
 import axios from "axios";
+import ProductForm from "@/components/ProductForm";
 
 export default function EditProductPage() {
+    const [productInfo, setProductInfo] = useState(null);
     const router = useRouter();
     const {id} = router.query;
     if(!id) {
@@ -12,13 +13,15 @@ export default function EditProductPage() {
     }
     useEffect(() => {
         axios.get('/api/products?id=' + id).then((response) => {
-                console.log(response.data)
+            setProductInfo(response.data);
+            console.log('setProductInfo +' + JSON.stringify(response.data));
             }
         )
     },[id]);
     return (
         <Layout>
-            edit product here
+            <h1>Edit Product</h1>
+            {productInfo &&  <ProductForm {...productInfo}/>} 
         </Layout>
     )
 }

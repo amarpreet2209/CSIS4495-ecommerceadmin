@@ -1,12 +1,12 @@
 import {useState} from "react";
 import {useRouter} from "next/router";
 import axios from "axios";
-import Layout from "@/components/Layout";
 
-export default function ProductForm() {
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [price, setPrice] = useState('');
+export default function ProductForm({title: existingTitle, description: existingDescription, price: existingPrice}) {
+    console.log("checking " +  existingTitle + ", " + existingDescription + ", " + existingPrice);
+    const [title, setTitle] = useState(existingTitle || '');
+    const [description, setDescription] = useState(existingDescription || '');
+    const [price, setPrice] = useState(existingPrice || '');
     const [goToProducts, setGoToProducts] = useState(false);
     const router = useRouter();
 
@@ -21,7 +21,7 @@ export default function ProductForm() {
     }
     return (
             <form onSubmit={createProduct}>
-                <h1>New Product</h1>
+
                 <label>Product name</label>
                 <input type="text" placeholder="product name" value={title} onChange={ev => setTitle(ev.target.value)}/>
                 <label>Description</label>
