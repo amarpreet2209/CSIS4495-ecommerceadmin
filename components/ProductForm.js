@@ -64,10 +64,10 @@ export default function ProductForm({
                 <label>Product name</label>
                 <input type="text" placeholder="product name" value={title} onChange={ev => setTitle(ev.target.value)}/>
                 <label>Photos</label>
-                <div className="mb-2">
+                <div className="mb-2 flex flex-wrap gap-2">
                     {!!images?.length && images.map(link => (
-                        <div>
-                            {link}
+                        <div key={link} className={"h-24"}>
+                            <img src={link} alt=""  className={"rounded-lg"}/>
                         </div>
                     ))}
                     <label className="w-24 h-24 text-center flex items-center justify-center text-sm gap-1 text-gray-500 rounded-lg bg-gray-200 cursor-pointer">
