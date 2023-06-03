@@ -7,12 +7,15 @@ export default function ProductForm({
     title: existingTitle,
     description: existingDescription,
     price: existingPrice,
-    images
+    images: existingImages,
     }) {
     console.log("checking " +  existingTitle + ", " + existingDescription + ", " + existingPrice);
     const [title, setTitle] = useState(existingTitle || '');
     const [description, setDescription] = useState(existingDescription || '');
     const [price, setPrice] = useState(existingPrice || '');
+
+    const [images, setImages] = useState(existingImages || []);
+
     const [goToProducts, setGoToProducts] = useState(false);
     const router = useRouter();
     console.log(_id);
@@ -47,11 +50,11 @@ export default function ProductForm({
             // const res = await axios.post('/api/upload', data,{
             //     headers: {'Content-Type': 'multipart/form-data'}
             // });
-            const res = await fetch('/api/upload', {
-                method: 'POST',
-                body: data
+            const res = await axios.post('/api/upload',  data);
+            console.log("res.data.links ",res.data.links);
+            setImages(oldImages => {
+                return [...oldImages, ...res.data.links];
             })
-            console.log(res);
         }
     }
 
@@ -62,6 +65,11 @@ export default function ProductForm({
                 <input type="text" placeholder="product name" value={title} onChange={ev => setTitle(ev.target.value)}/>
                 <label>Photos</label>
                 <div className="mb-2">
+                    {!!images?.length && images.map(link => (
+                        <div>
+                            {link}
+                        </div>
+                    ))}
                     <label className="w-24 h-24 text-center flex items-center justify-center text-sm gap-1 text-gray-500 rounded-lg bg-gray-200 cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15m0-3l-3-3m0 0l-3 3m3-3V15" />
