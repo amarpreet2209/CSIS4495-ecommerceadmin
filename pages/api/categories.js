@@ -16,6 +16,6 @@ export default async function handle(req, res) {
     }
 
     if (method === 'GET') {
-        res.json(await Category.find({}));
+        res.json(await Category.find({}).populate('parent'));
     }
 }

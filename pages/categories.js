@@ -53,12 +53,14 @@ export default function Categories() {
                 <thead>
                 <tr>
                     <td>Category Name</td>
+                    <td>Parent Category</td>
                 </tr>
                 </thead>
                 <tbody>
                 {categories.length > 0 && categories.map((category) => (
                     <tr>
                        <td>{category.name}</td>
+                       <td>{category?.parent?.name}</td>
                     </tr>
                 ))}
                 </tbody>
