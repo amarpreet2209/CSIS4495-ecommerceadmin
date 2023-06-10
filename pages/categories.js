@@ -9,6 +9,8 @@ function Categories({swal}) {
     const [categories, setCategories] = useState([]);
     const [parentCategory, setParentCategory] = useState('');
 
+    const [properties, setProperties] = useState([]);
+
     function fetchCategories() {
         axios.get('/api/categories').then((result) => {
             setCategories(result.data);
@@ -58,28 +60,55 @@ function Categories({swal}) {
         });
     }
 
+    function addProperty() {
+        setProperties(prev => {
+            return [...prev, {name:'', values: ''}];
+        })
+    }
+
     return (
         <Layout>
             <h1>Categories</h1>
             <label>{editedCategory ? `Edit Category ${editedCategory.name}` : 'Create new category'}</label>
-            <form onSubmit={saveCategory} className="flex gap-1">
-                <input
-                    className={"mb-0"}
-                    type="text"
-                    placeholder={"Category Name"}
-                    value={name}
-                    onChange={ev => setName(ev.target.value)}
-                />
+            <form onSubmit={saveCategory}>
 
-                <select className={"mb-0"} value={parentCategory}
-                        onChange={ev => setParentCategory(ev.target.value)}>
-                    <option value={""}>No Parent Category</option>
-                    {categories.length > 0 && categories.map((category) => (
-                        <option value={category._id}>
-                            {category.name}
-                        </option>
+                <div className="flex gap-1">
+                    <input
+                        type="text"
+                        placeholder={"Category Name"}
+                        value={name}
+                        onChange={ev => setName(ev.target.value)}
+                    />
+                    <select value={parentCategory}
+                            onChange={ev => setParentCategory(ev.target.value)}>
+                        <option value={""}>No Parent Category</option>
+                        {categories.length > 0 && categories.map((category) => (
+                            <option value={category._id}>
+                                {category.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className={"mb-2"}>
+                    <label className={"block"}>Properties</label>
+                    <button type={"button"} className={"btn-default text-sm"}
+                    onClick={addProperty}>Add new property</button>
+
+                    {properties.length > 0 && properties.map((property) => (
+                        <div className={"flex gap-1"}>
+                            <input
+                                type={"text"}
+                                placeholder={"property name (example: color"}
+                            ></input>
+                            <input
+                                type={"text"}
+                                placeholder={"values, comma separated"}
+                            ></input>
+                        </div>
                     ))}
-                </select>
+
+                </div>
 
                 <button type={'submit'} className="btn btn-primary py-1">Save</button>
             </form>

@@ -10,12 +10,13 @@ export default function ProductForm({
     description: existingDescription,
     price: existingPrice,
     images: existingImages,
+    category: assignedCategory,
     }) {
     console.log("checking " +  existingTitle + ", " + existingDescription + ", " + existingPrice);
     const [title, setTitle] = useState(existingTitle || '');
     const [description, setDescription] = useState(existingDescription || '');
 
-    const [category, setCategory] = useState('');
+    const [category, setCategory] = useState(assignedCategory || '');
 
     const [price, setPrice] = useState(existingPrice || '');
 
