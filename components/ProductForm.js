@@ -38,7 +38,7 @@ export default function ProductForm({
         ev.preventDefault();
 
 
-        const data = {title, description, price, images  };
+        const data = {title, description, price, images, category };
         // updating instead of creating
         if(_id) {
              await axios.put('/api/products', {...data,_id});
