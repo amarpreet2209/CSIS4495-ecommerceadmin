@@ -66,6 +66,29 @@ function Categories({swal}) {
         })
     }
 
+    function handlePropertyNameChange(index, property, newName) {
+            setProperties(prev => {
+                const properties = [...prev];
+                properties[index].name = newName;
+                return properties;
+            })
+    }
+    function handlePropertyValuesChange(index, property, newValues) {
+                setProperties(prev => {
+                    const properties = [...prev];
+                    properties[index].values = newValues;
+                    return properties;
+                })
+        }
+
+    function removeProperty(indexToRemove) {
+        console.log("indexToRemove", indexToRemove);
+        setProperties(prev => {
+            return [...prev].filter((p, pIndex) => {
+                return pIndex !== indexToRemove;
+            });
+        });
+    }
     return (
         <Layout>
             <h1>Categories</h1>
@@ -92,19 +115,30 @@ function Categories({swal}) {
 
                 <div className={"mb-2"}>
                     <label className={"block"}>Properties</label>
-                    <button type={"button"} className={"btn-default text-sm"}
+                    <button type={"button"} className={"btn-default text-sm mb-2"}
                     onClick={addProperty}>Add new property</button>
 
-                    {properties.length > 0 && properties.map((property) => (
-                        <div className={"flex gap-1"}>
+                    {properties.length > 0 && properties.map((property, index) => (
+                        <div className={"flex gap-1 mb-2"}>
                             <input
                                 type={"text"}
+                                className={"mb-0"}
                                 placeholder={"property name (example: color"}
+                                value={property.name}
+                                onChange={(ev) => handlePropertyNameChange(index, property, ev.target.value)}
                             ></input>
                             <input
                                 type={"text"}
+                                className={"mb-0"}
                                 placeholder={"values, comma separated"}
+                                onChange={ev => handlePropertyValuesChange(index, property, ev.target.value)}
+                                value={property.values}
                             ></input>
+                            <button
+                                className={"btn-default"}
+                                type={"button"}
+                                onClick={() => removeProperty(index)}
+                            >Remove</button>
                         </div>
                     ))}
 
