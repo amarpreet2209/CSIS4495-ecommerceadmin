@@ -144,32 +144,53 @@ function Categories({swal}) {
 
                 </div>
 
-                <button type={'submit'} className="btn btn-primary py-1">Save</button>
+                <div className="flex gap-1">
+                    {editedCategory && (
+                    <button
+                        type={"button"}
+                        onClick={() => {
+                                setEditedCategory(null);
+                                setName('');
+                                setParentCategory('');
+                            }
+                        }
+                        className="btn-default">Cancel</button>
+                )}
+
+                    <button type={'submit'} className="btn-primary py-1">Save</button>
+                </div>
             </form>
-            <table className={"basic mt-4"}>
-                <thead>
-                <tr>
-                    <td>Category Name</td>
-                    <td>Parent Category</td>
-                    <td></td>
-                </tr>
-                </thead>
-                <tbody>
-                {categories.length > 0 && categories.map((category) => (
+
+
+            {!editedCategory && (
+
+                <table className={"basic mt-4"}>
+                    <thead>
                     <tr>
-                        <td>{category.name}</td>
-                        <td>{category?.parent?.name}</td>
-                        <td>
-                            <button className={"btn-primary mr-1"} onClick={() => editCategory(category)}>Edit
-                            </button>
-                            <button
-                                onClick={() => deleteCategory(category)}
-                                className={"btn-primary"}>Delete</button>
-                        </td>
+                        <td>Category Name</td>
+                        <td>Parent Category</td>
+                        <td></td>
                     </tr>
-                ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {categories.length > 0 && categories.map((category) => (
+                        <tr>
+                            <td>{category.name}</td>
+                            <td>{category?.parent?.name}</td>
+                            <td>
+                                <button className={"btn-primary mr-1"} onClick={() => editCategory(category)}>Edit
+                                </button>
+                                <button
+                                    onClick={() => deleteCategory(category)}
+                                    className={"btn-primary"}>Delete</button>
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+
+            )}
+
         </Layout>
     );
 }
