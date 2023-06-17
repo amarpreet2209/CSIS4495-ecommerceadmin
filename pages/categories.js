@@ -169,6 +169,7 @@ function Categories({swal}) {
                                 setEditedCategory(null);
                                 setName('');
                                 setParentCategory('');
+                                setProperties([]);
                             }
                         }
                         className="btn-default">Cancel</button>
