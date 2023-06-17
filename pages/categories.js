@@ -26,8 +26,8 @@ function Categories({swal}) {
         const data = {
             name,
             parentCategory,
-            properties:properties.map (prop => ({       name: prop.name,
-                                                        value: prop.values.split(',')
+            properties:properties.map(prop => ({       name: prop.name,
+                                                        values: prop.values.split(',')
                                                     })
                                         )
         };
@@ -48,6 +48,12 @@ function Categories({swal}) {
         setEditedCategory(category);
         setName(category.name);
         setParentCategory(category.parent?._id || '');
+        console.log(category.properties);
+        setProperties(category.properties.map(({ name, values }) => ({
+            name,
+            values: values.join(',')
+        })));
+
     }
 
     function deleteCategory(category) {
@@ -136,13 +142,15 @@ function Categories({swal}) {
                                 value={property.name}
                                 onChange={(ev) => handlePropertyNameChange(index, property, ev.target.value)}
                             ></input>
-                            <input
-                                type={"text"}
-                                className={"mb-0"}
-                                placeholder={"values, comma separated"}
-                                onChange={ev => handlePropertyValuesChange(index, property, ev.target.value)}
-                                value={property.values}
-                            ></input>
+                            <input type="text"
+                                   className="mb-0"
+                                   onChange={ev =>
+                                       handlePropertyValuesChange(
+                                           index,
+                                           property,ev.target.value
+                                       )}
+                                   value={property.values}
+                                   placeholder="values, comma separated"/>
                             <button
                                 className={"btn-default"}
                                 type={"button"}
