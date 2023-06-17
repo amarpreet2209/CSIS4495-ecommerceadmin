@@ -20,7 +20,7 @@ export default function ProductForm({
     const [category, setCategory] = useState(assignedCategory || '');
 
     const [price, setPrice] = useState(existingPrice || '');
-    const [productProperties, setProductProperties] = useState(assignedProperties || {});
+    const [productProperties, setProductProperties] = useState(assignedProperties ||    {});
 
     const [images, setImages] = useState(existingImages || []);
 
@@ -124,6 +124,7 @@ export default function ProductForm({
                             <select
                                 value={productProperties[p.name]}
                                 onChange={(ev) => setProductProp(p.name, ev.target.value)}>
+                                <option value={""}></option>
                                 {p.values.map(v => (
                                     <option value={v}>{v}</option>
                                 ))}
