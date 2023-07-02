@@ -25,7 +25,9 @@ export default function OrdersPage() {
                 <tbody>
                 {orders.length > 0 && orders.map(order => (
                     <tr>
-                        <td>{order.createdAt}</td>
+                        <td>{order.createdAt
+                            .replace('T', ' ')
+                            .substring(0,19)}</td>
                         <td>
                             {order.name} {order.email}<br/>
                             {order.city} {order.postalCode}<br/>
