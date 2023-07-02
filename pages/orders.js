@@ -17,7 +17,7 @@ export default function OrdersPage() {
             <table className={"basic"}>
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>Date</th>
                         <th>Recipient</th>
                         <th>Products</th>
                     </tr>
@@ -25,12 +25,19 @@ export default function OrdersPage() {
                 <tbody>
                 {orders.length > 0 && orders.map(order => (
                     <tr>
-                        <td>{order._id}</td>
+                        <td>{order.createdAt}</td>
                         <td>
                             {order.name} {order.email}<br/>
                             {order.city} {order.postalCode}<br/>
                             {order.country}<br/>
                             {order.streetAddress}
+                        </td>
+                        <td>
+                            {order.line_items.map(l => (
+                                <>
+                                    {l.price_data?.product_data.name} x {l.quantity}<br/>
+                                </>
+                            ))}
                         </td>
                     </tr>
                 ))}
