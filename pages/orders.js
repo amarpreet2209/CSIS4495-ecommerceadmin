@@ -1,10 +1,15 @@
 import Layout from "@/components/Layout";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 export default function OrdersPage() {
     
-    useEffect(() => {
+    const [orders, setOrders] = useState([]);
     
+    useEffect(() => {
+        axios.get('/api/orders').then(response => {
+            setOrders(response.data)
+        })
     },[]);
     
     return (
@@ -18,7 +23,17 @@ export default function OrdersPage() {
                     </tr>
                 </thead>
                 <tbody>
-                
+                {orders.length > 0 && orders.map(order => (
+                    <tr>
+                        <td>{order._id}</td>
+                        <td>
+                            {order.name} {order.email}<br/>
+                            {order.city} {order.postalCode}<br/>
+                            {order.country}<br/>
+                            {order.streetAddress}
+                        </td>
+                    </tr>
+                ))}
                 </tbody>
             </table>
         </Layout>
