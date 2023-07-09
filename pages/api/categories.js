@@ -24,7 +24,7 @@ export default async function handle(req, res) {
         res.json(await Category.find({}).populate('parent'));
     }
 
-    if (method === 'PUT') {
+    /*if (method === 'PUT') {
         const {name, parentCategory, _id,properties} = req.body;
         const categoryDoc = await Category.updateOne({ _id},{
             name,
@@ -32,8 +32,26 @@ export default async function handle(req, res) {
             properties: properties
         });
         res.json(categoryDoc);
+    }*/
+    
+    if (method === 'PUT') {
+        const { name, parentCategory, _id, properties } = req.body;
+        const updateObj = {
+            name,
+            properties
+        };
+        
+        if (parentCategory) {
+            updateObj.parent = parentCategory;
+        } else {
+            updateObj.$unset = { parent: 1 };
+        }
+        
+        const categoryDoc = await Category.updateOne({ _id }, updateObj);
+        res.json(categoryDoc);
     }
-
+    
+    
     if (method === 'DELETE') {
         const {_id} = req.query;
         await Category.deleteOne({_id});
