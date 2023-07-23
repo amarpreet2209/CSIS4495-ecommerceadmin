@@ -52,7 +52,7 @@ function Categories({swal}) {
         setEditedCategory(category);
         setName(category.name);
         setParentCategory(category.parent?._id || '');
-        console.log(category.properties);
+        // console.log(category.properties);
         setProperties(category.properties.map(({ name, values }) => ({
             name,
             values: values.join(',')
@@ -101,7 +101,7 @@ function Categories({swal}) {
         }
 
     function removeProperty(indexToRemove) {
-        console.log("indexToRemove", indexToRemove);
+        // console.log("indexToRemove", indexToRemove);
         setProperties(prev => {
             return [...prev].filter((p, pIndex) => {
                 return pIndex !== indexToRemove;
