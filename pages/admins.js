@@ -1,10 +1,13 @@
 import Layout from "@/components/Layout";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 import {withSwal} from "react-sweetalert2";
+import Spinner from "@/components/Spinner";
 
 function AdminsPage({swal}) {
     const [email, setEmail] = useState('');
+    const [adminEmails, setAdminEmails] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     
     function addAdmin(ev) {
         ev.preventDefault();
@@ -14,8 +17,22 @@ function AdminsPage({swal}) {
                 icon: "success"
             })
             setEmail('');
+            loadAdmins();
         })
     }
+    
+    function loadAdmins() {
+        setIsLoading(true);
+        axios.get('/api/admins')
+            .then(res => {
+                setAdminEmails(res.data);
+                setIsLoading(false);
+            })
+    }
+    
+    useEffect(() => {
+        loadAdmins();
+    } , []);
     
     return (
         <Layout>
@@ -47,9 +64,21 @@ function AdminsPage({swal}) {
                     </tr>
                 </thead>
                 <tbody>
+                {isLoading && (
                     <tr>
-                        <td>test@gmail.com</td>
+                        <td colSpan={2}>
+                            <div className={"py-4"}>
+                                <Spinner fullWidth={true} />
+                            </div>
+                        </td>
                     </tr>
+                )}
+                {adminEmails.length > 0 && adminEmails.map(adminEmail => (
+                    <tr>
+                        <td>{adminEmail.email}</td>
+                        <td></td>
+                    </tr>
+                ))}
                 </tbody>
                 
             </table>
