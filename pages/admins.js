@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {withSwal} from "react-sweetalert2";
 import Spinner from "@/components/Spinner";
+import prettyDate from "@/lib/date";
 
 function AdminsPage({swal}) {
     const [email, setEmail] = useState('');
@@ -61,6 +62,7 @@ function AdminsPage({swal}) {
                     <tr>
                         <th className={"text-left"}>Admin Google email</th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -76,7 +78,10 @@ function AdminsPage({swal}) {
                 {adminEmails.length > 0 && adminEmails.map(adminEmail => (
                     <tr>
                         <td>{adminEmail.email}</td>
-                        <td></td>
+                        <td>{adminEmail.createdAt && prettyDate(adminEmail?.createdAt)}</td>
+                        <td>
+                            <button className="btn-default">Delete</button>
+                        </td>
                     </tr>
                 ))}
                 </tbody>
