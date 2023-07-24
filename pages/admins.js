@@ -19,7 +19,13 @@ function AdminsPage({swal}) {
             })
             setEmail('');
             loadAdmins();
-        })
+        }).catch(error => {
+            swal.fire({
+                title: "Error!",
+                text: error.response.data.message,
+                icon: "error"
+            })
+        });
     }
     
     function loadAdmins() {
@@ -55,8 +61,7 @@ function AdminsPage({swal}) {
                     loadAdmins();
                 })
             }
-        }).catch(error => {
-        });
+        })
         
        
     }
