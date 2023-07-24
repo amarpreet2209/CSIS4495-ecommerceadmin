@@ -1,14 +1,19 @@
 import Layout from "@/components/Layout";
 import {useState} from "react";
 import axios from "axios";
+import {withSwal} from "react-sweetalert2";
 
-export default function AdminsPage() {
+function AdminsPage({swal}) {
     const [email, setEmail] = useState('');
     
     function addAdmin(ev) {
         ev.preventDefault();
         axios.post('/api/admins', {email}).then(res => {
-            alert(res.data);
+            swal.fire({
+                title: 'Admin Created',
+                icon: "success"
+            })
+            setEmail('');
         })
     }
     
@@ -51,3 +56,7 @@ export default function AdminsPage() {
         </Layout>
     )
 }
+
+export default withSwal(({swal}) => (
+    <AdminsPage swal={swal}/>
+))
