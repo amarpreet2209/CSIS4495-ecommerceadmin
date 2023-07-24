@@ -13,4 +13,9 @@ export default async function handle(req, res) {
     if (req.method === 'GET') {
         res.json(await Admin.find());
     }
+    if (req.method === 'DELETE') {
+        const {_id} = req.query;
+        await Admin.findByIdAndDelete(_id);
+        res.json(true);
+    }
 }

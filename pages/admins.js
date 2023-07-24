@@ -35,6 +35,32 @@ function AdminsPage({swal}) {
         loadAdmins();
     } , []);
     
+    function deleteAdmin(_id, email) {
+        
+        swal.fire({
+            title: 'Are you sure?',
+            text: `Do you want to delete admin '${email}'?`,
+            showCancelButton: true,
+            cancelButtonText: 'Cancel',
+            confirmButtonText: 'Yes, Delete!',
+            confirmButtonColor: "#f55555",
+            
+        }).then(async result => {
+            if (result.isConfirmed) {
+                axios.delete('/api/admins?_id='+ _id).then(() => {
+                    swal.fire({
+                        title: "Admin deleted!",
+                        icon: "success"
+                    })
+                    loadAdmins();
+                })
+            }
+        }).catch(error => {
+        });
+        
+       
+    }
+    
     return (
         <Layout>
             <h1>Admins</h1>
@@ -80,7 +106,9 @@ function AdminsPage({swal}) {
                         <td>{adminEmail.email}</td>
                         <td>{adminEmail.createdAt && prettyDate(adminEmail?.createdAt)}</td>
                         <td>
-                            <button className="btn-default">Delete</button>
+                            <button
+                                onClick={() => deleteAdmin(adminEmail._id, adminEmail.email)}
+                                className="btn-red">Delete</button>
                         </td>
                     </tr>
                 ))}
