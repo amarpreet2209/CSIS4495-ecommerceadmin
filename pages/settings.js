@@ -19,6 +19,13 @@ export default function SettingsPage() {
     },[])
     
     
+    async function saveSettings() {
+        await axios.put('/api/settings', {
+            name: 'featuredProductId',
+            value: featuredProductId
+        })
+    }
+    
     return (
         <Layout>
             <h1>Settings</h1>
@@ -36,7 +43,9 @@ export default function SettingsPage() {
                     </select>
                     
                     <div>
-                        <button className={"btn-primary"}>Save Settings</button>
+                        <button
+                            onClick={saveSettings}
+                            className={"btn-primary"}>Save Settings</button>
                     </div>
                 </>
             )}

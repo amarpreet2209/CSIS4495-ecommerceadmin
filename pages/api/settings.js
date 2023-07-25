@@ -14,8 +14,9 @@ export default async function handle(req, res) {
         if (settingDoc) {
             settingDoc.value = value;
             await settingDoc.save();
+            res.json(settingDoc);
         } else {
-            await Setting.create({name, value});
+            res.json(await Setting.create({name, value}));
         }
     }
 }
