@@ -2,8 +2,9 @@ import Layout from "@/components/Layout";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import Spinner from "@/components/Spinner";
+import {withSwal} from "react-sweetalert2";
 
-export default function SettingsPage() {
+function SettingsPage({swal}) {
     const [products, setProducts] = useState([]);
     const [featuredProductId, setFeaturedProductId] = useState('');
     const [productsLoading, setProductsLoading] = useState(false);
@@ -30,6 +31,11 @@ export default function SettingsPage() {
         await axios.put('/api/settings', {
             name: 'featuredProductId',
             value: featuredProductId
+        }).then(() => {
+            swal.fire({
+                title: 'Settings saved!',
+                icon: 'success'
+            })
         })
     }
     
@@ -63,3 +69,7 @@ export default function SettingsPage() {
         </Layout>
     )
 }
+
+export default withSwal(({swal}) => (
+    <SettingsPage swal={swal}/>
+))
