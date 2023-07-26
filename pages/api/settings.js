@@ -19,4 +19,9 @@ export default async function handle(req, res) {
             res.json(await Setting.create({name, value}));
         }
     }
+    
+    if (req.method === 'GET') {
+        const {name} = req.query;
+        res.json(await Setting.findOne({name}))
+    }
 }
