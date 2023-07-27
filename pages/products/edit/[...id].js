@@ -11,9 +11,7 @@ export default function EditProductPage() {
     
     const router = useRouter();
     const {id} = router.query;
-    if(!id) {
-        return;
-    }
+    
     useEffect(() => {
         setIsLoading(true);
         axios.get('/api/products?id=' + id).then((response) => {
@@ -23,6 +21,10 @@ export default function EditProductPage() {
             }
         )
     },[id]);
+    
+    if(!id) {
+        return;
+    }
     return (
         <Layout>
             <h1>Edit Product</h1>
