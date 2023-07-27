@@ -54,13 +54,13 @@ function SettingsPage({swal}) {
             )}
             {!isLoading && (
                 <>
-                    <label>Featured product</label>
+                    <label>Featured Product</label>
                     <select value={featuredProductId} onChange={ev => setFeaturedProductId(ev.target.value)}>
                         {products.length > 0 && products.map(product => (
                             <option key={product._id} value={product._id}>{product.title}</option>
                         ))}
                     </select>
-                    <label>Shipping price (in CAD)</label>
+                    <label>Shipping Price (in CAD)</label>
                     <input type="number"
                            value={shippingFee}
                            onChange={ev => setShippingFee(ev.target.value)}

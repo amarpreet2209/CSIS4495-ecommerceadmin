@@ -2,6 +2,7 @@ import Layout from "@/components/Layout";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import Spinner from "@/components/Spinner";
+import prettyDate from "@/lib/date";
 
 export default function OrdersPage() {
     
@@ -40,7 +41,7 @@ export default function OrdersPage() {
                 }
                 {orders.length > 0 && orders.map(order => (
                     <tr key={order._id}>
-                        <td>{new Date(order.createdAt).toLocaleString()}</td>
+                        <td>{prettyDate(order.createdAt)}</td>
                         <td className={order.paid ? 'text-green-600':'text-red-600'}>
                             {order.paid ? 'YES':'NO'}
                         </td>
