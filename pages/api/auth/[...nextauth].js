@@ -5,7 +5,13 @@ import clientPromise from "@/lib/mongodb";
 import {Admin} from "@/models/Admin";
 
 async function isAdminEmail(email) {
-  return !! (await Admin.findOne({email}))
+    try {
+        const admin = await Admin.findOne({ email });
+        return !!admin; // Return true if admin is found, false otherwise
+    } catch (error) {
+        console.error('Error checking if email is admin:', error);
+        throw new Error('Server Error'); // Throw an error to be handled by the calling function
+    }
 }
 
 export const authOptions = {
